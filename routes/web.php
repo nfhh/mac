@@ -15,7 +15,6 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-
     $arr = [
         [
             'sn' => '11111',
@@ -44,18 +43,25 @@ Route::get('/', function () {
         ]
     ];
 
-    $n = ["sn" => "aaa", "key" => "bbb", "mac" => "ccc"];
+    $n = ["sn" => "xxx", "key" => "yyy", "mac" => "zzz"];
     $k = count($arr);
+    $c = 0;
     for ($i = 0; $i < $k; $i++) {
         for ($j = ($k - 1); $j > $i; $j--) {
             foreach ($arr[$i] as $key => &$val) {
                 foreach ($arr[$j] as $key1 => &$val1) {
-                    dump($key, $key1, $val, $val1);
+                    if ($key == $key1 && $val == $val1) {
+                        $c++;
+                        if (strpos($val, $n[$key]) === false) {
+                            $val = $val . $n[$key];
+                            $val1 = $val1 . $n[$key];
+                        }
+                    }
                 }
             }
         }
     }
-    dump($arr);
+    dump($arr, $c.'处重复');
 });
 
 Auth::routes();

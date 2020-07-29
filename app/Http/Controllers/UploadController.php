@@ -11,7 +11,7 @@ class UploadController extends Controller
 {
     public function mac()
     {
-        $macs = Mac::paginate();
+        $macs = Mac::paginate(20);
         return view('upload.mac', compact('macs'));
     }
 
@@ -32,7 +32,7 @@ class UploadController extends Controller
 
     public function snkey()
     {
-        $snkeys = Snkey::paginate();
+        $snkeys = Snkey::paginate(20);
         return view('upload.snkey', compact('snkeys'));
     }
 
@@ -54,7 +54,7 @@ class UploadController extends Controller
 
     public function pcba()
     {
-        $pcbas = Pcba::paginate();
+        $pcbas = Pcba::paginate(20);
         return view('upload.pcba', compact('pcbas'));
     }
 
@@ -63,13 +63,31 @@ class UploadController extends Controller
         $excel_data = readExcel($request->file('file'));
         $data = [];
         // 重复 warning   不在 danger
+        $b = 0;
         foreach ($excel_data as $k => $arr) {
             $sn = $arr['PCBA写入的SN，要求写在SP寄存器'];
-            $data[$k]['sn'] = Snkey::where('sn', $sn)->count() === 0 ? '<span class="text-danger">' . $sn . '</span>' : $sn;
+            if (Snkey::where('sn', $sn)->count() === 0) {
+                $b++;
+                $data[$k]['sn'] = '<span class="text-danger">' . $sn . '</span>';
+            } else {
+                $data[$k]['sn'] = $sn;
+            }
+
             $key = $arr['PCBA写入的密钥,要求写在SS寄存器'];
-            $data[$k]['key'] = Snkey::where('key', $key)->count() === 0 ? '<span class="text-danger">' . $key . '</span>' : $key;
+            if (Snkey::where('key', $key)->count() === 0) {
+                $b++;
+                $data[$k]['key'] = '<span class="text-danger">' . $key . '</span>';
+            } else {
+                $data[$k]['key'] = $key;
+            }
+
             $mac = $arr['PCBA写入的MAC地址'];
-            $data[$k]['mac'] = Mac::where('mac', $arr['PCBA写入的MAC地址'])->count() === 0 ? '<span class="text-danger">' . $mac . '</span>' : $mac;
+            if (Mac::where('mac', $arr['PCBA写入的MAC地址'])->count() === 0) {
+                $b++;
+                $data[$k]['mac'] = '<span class="text-danger">' . $mac . '</span>';
+            } else {
+                $data[$k]['mac'] = $mac;
+            }
 
             $data[$k]['created_at'] = now();
             $data[$k]['updated_at'] = now();
@@ -77,13 +95,17 @@ class UploadController extends Controller
 
         $n = ["sn" => "text-warning", "key" => "text-primary", "mac" => "text-info"];
         $k = count($data);
+        $c = 0;
         for ($i = 0; $i < $k; $i++) {
             for ($j = ($k - 1); $j > $i; $j--) {
                 foreach ($data[$i] as $key => &$val) {
                     foreach ($data[$j] as $key1 => &$val1) {
                         if ($key == $key1 && $val == $val1) {
-                            $val = '<span class="' . $n[$key] . '">' . $val . '</span>';
-                            $val1 = '<span class="' . $n[$key] . '">' . $val1 . '</span>';
+                            $c++;
+                            if (strpos($val, $n[$key]) === false) {
+                                $val = '<span class="' . $n[$key] . '">' . $val . '</span>';
+                                $val1 = '<span class="' . $n[$key] . '">' . $val1 . '</span>';
+                            }
                         }
                     }
                 }
@@ -91,6 +113,16 @@ class UploadController extends Controller
         }
 
         Pcba::insert($data);
-        return back()->with('success', '导入PCBA结果表成功！');
+
+        $str = '导入PCBA结果表成功！';
+
+        if ($b && $c) {
+            $str .= '<br/>多余：<strong class="text-danger">' . $b . '</strong>处，重复：<strong class="text-danger">' . $c . '</strong>处';
+        } elseif ($b) {
+            $str .= '<br/>多余：<strong class="text-danger">' . $b . '</strong>处';
+        } elseif ($c) {
+            $str .= '<br/>重复：<strong class="text-danger">' . $c . '</strong>处';
+        }
+        return back()->with('success', $str);
     }
 }
