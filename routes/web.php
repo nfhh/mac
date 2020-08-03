@@ -1,6 +1,6 @@
 <?php
 
-use App\Mac;
+use App\Pcba;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -15,53 +15,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    $arr = [
-        [
-            'sn' => '11111',
-            'key' => '22222', // yyy
-            'mac' => 'abcd', // zzz
-        ],
-        [
-            'sn' => '66666', // xxx
-            'key' => '44444',
-            'mac' => 'fhksl',
-        ],
-        [
-            'sn' => '66666', // xxx
-            'key' => '22222', // yyy
-            'mac' => 'abcd', // zzz
-        ],
-        [
-            'sn' => '33333',
-            'key' => '55555',
-            'mac' => 'abcd', // zzz
-        ],
-        [
-            'sn' => '7890',
-            'key' => '34566',
-            'mac' => 'abcd', // zzz
-        ]
-    ];
-
-    $n = ["sn" => "xxx", "key" => "yyy", "mac" => "zzz"];
-    $k = count($arr);
-    $c = 0;
-    for ($i = 0; $i < $k; $i++) {
-        for ($j = ($k - 1); $j > $i; $j--) {
-            foreach ($arr[$i] as $key => &$val) {
-                foreach ($arr[$j] as $key1 => &$val1) {
-                    if ($key == $key1 && $val == $val1) {
-                        $c++;
-                        if (strpos($val, $n[$key]) === false) {
-                            $val = $val . $n[$key];
-                            $val1 = $val1 . $n[$key];
-                        }
-                    }
-                }
-            }
-        }
-    }
-    dump($arr, $c.'处重复');
+    return redirect(route('login'));
 });
 
 Auth::routes();
@@ -70,6 +24,8 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 Route::middleware('auth')->group(function () {
     Route::get('/home', 'HomeController@index')->name('home');
+    Route::get('/user/edit', 'UserController@edit')->name('user.edit');
+    Route::post('/user/update', 'UserController@update')->name('user.update');
     Route::get('/upload/mac', 'UploadController@mac')->name('upload.mac');
     Route::post('/upload/mac', 'UploadController@handleMac')->name('upload.mac');
     Route::get('/upload/snkey', 'UploadController@snkey')->name('upload.snkey');
