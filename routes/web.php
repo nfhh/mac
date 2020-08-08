@@ -14,6 +14,13 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::get('/test', function () {
+    $arr = [
+
+    ];
+    dd(collect($arr)->count());
+});
+
 Route::get('/', function () {
     return redirect(route('login'));
 });
@@ -32,4 +39,5 @@ Route::middleware('auth')->group(function () {
     Route::post('/upload/snkey', 'UploadController@handleSnkey')->name('upload.snkey');
     Route::get('/upload/pcba', 'UploadController@pcba')->name('upload.pcba');
     Route::post('/upload/pcba', 'UploadController@handlePcba')->name('upload.pcba');
+    Route::get('/result', 'ResultController@index')->name('result.index');
 });

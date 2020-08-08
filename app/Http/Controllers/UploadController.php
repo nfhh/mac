@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Mac;
 use App\Pcba;
+use App\Result;
 use App\Snkey;
 use Illuminate\Http\Request;
 
@@ -64,31 +65,27 @@ class UploadController extends Controller
         $data = [];
         // 重复 warning   不在 danger
         $b = 0;
+        $result = [];
         foreach ($excel_data as $k => $arr) {
             $sn = $arr['PCBA写入的SN，要求写在SP寄存器'];
+            $data[$k]['sn'] = $sn;
             if (Snkey::where('sn', $sn)->count() === 0) {
                 $b++;
-                $data[$k]['sn'] = '<span class="text-danger">' . $sn . '</span>';
-            } else {
-                $data[$k]['sn'] = $sn;
+                $result[$k + 1]['sn'] = '<span class="text-danger">' . $sn . '</span>';
             }
-
             $key = $arr['PCBA写入的密钥,要求写在SS寄存器'];
+            $data[$k]['key'] = $key;
             if (Snkey::where('key', $key)->count() === 0) {
                 $b++;
-                $data[$k]['key'] = '<span class="text-danger">' . $key . '</span>';
-            } else {
-                $data[$k]['key'] = $key;
+                $result[$k + 1]['key'] = '<span class="text-danger">' . $key . '</span>';
             }
 
             $mac = $arr['PCBA写入的MAC地址'];
+            $data[$k]['mac'] = $mac;
             if (Mac::where('mac', $arr['PCBA写入的MAC地址'])->count() === 0) {
                 $b++;
-                $data[$k]['mac'] = '<span class="text-danger">' . $mac . '</span>';
-            } else {
-                $data[$k]['mac'] = $mac;
+                $result[$k + 1]['mac'] = '<span class="text-danger">' . $mac . '</span>';
             }
-
             $data[$k]['created_at'] = now();
             $data[$k]['updated_at'] = now();
         }
@@ -96,15 +93,15 @@ class UploadController extends Controller
         $n = ["sn" => "text-warning", "key" => "text-primary", "mac" => "text-info"];
         $k = count($data);
         $c = 0;
+
         for ($i = 0; $i < $k; $i++) {
             for ($j = ($k - 1); $j > $i; $j--) {
-                foreach ($data[$i] as $key => &$val) {
-                    foreach ($data[$j] as $key1 => &$val1) {
-                        if ($key == $key1 && $val == $val1) {
+                foreach ($data[$i] as $ind => $val) {
+                    foreach ($data[$j] as $ind1 => $val1) {
+                        if ($ind == $ind1 && $val == $val1) {
                             $c++;
-                            if (strpos($val, $n[$key]) === false) {
-                                $val = '<span class="' . $n[$key] . '">' . $val . '</span>';
-                                $val1 = '<span class="' . $n[$key] . '">' . $val1 . '</span>';
+                            if (strpos($val1, $n[$ind1]) === false) {
+                                $result[$k][$ind1] = '<span class="' . $n[$ind1] . '">' . $val1 . '</span>';
                             }
                         }
                     }
@@ -114,8 +111,14 @@ class UploadController extends Controller
 
         Pcba::insert($data);
 
-        $str = '导入PCBA结果表成功！';
+        foreach ($result as $id => &$arr) {
+            $arr['id'] = $id;
+            $data['created_at'] = now();
+            $data['updated_at'] = now();
+        }
+        Result::insert($result);
 
+        $str = '导入PCBA结果表成功！';
         if ($b && $c) {
             $str .= '<br/>多余：<strong class="text-danger">' . $b . '</strong>处，重复：<strong class="text-danger">' . $c . '</strong>处';
         } elseif ($b) {

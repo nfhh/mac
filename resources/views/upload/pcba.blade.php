@@ -8,7 +8,7 @@
             </div>
             <div class="col-md-9">
                 <div class="card">
-                    <div class="card-header">上传PCBA结果表</div>
+                    <div class="card-header">上传PCBA表</div>
                     <div class="card-body">
                         @include('common._message')
                         <form action="{{ route('upload.pcba') }}" method="post" enctype="multipart/form-data">
@@ -22,7 +22,7 @@
                         </form>
                     </div>
                 </div>
-                <div class="card mt-3">
+                <div class="card">
                     <div class="card-header">PCBA记录</div>
                     <div class="card-body">
                         <table class="table">

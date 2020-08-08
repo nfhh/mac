@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreatePcbasTable extends Migration
+class CreateResultsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,12 @@ class CreatePcbasTable extends Migration
      */
     public function up()
     {
-        Schema::create('pcbas', function (Blueprint $table) {
+        Schema::create('results', function (Blueprint $table) {
             $table->id();
             $table->string('sn')->default('');
             $table->string('key')->default('');
             $table->string('mac')->default('');
+            $table->timestamp('handled_at')->nullable();
             $table->timestamps();
         });
     }
@@ -29,6 +30,6 @@ class CreatePcbasTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('pcbas');
+        Schema::dropIfExists('results');
     }
 }

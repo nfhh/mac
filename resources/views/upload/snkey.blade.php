@@ -22,7 +22,7 @@
                         </form>
                     </div>
                 </div>
-                <div class="card mt-3">
+                <div class="card">
                     <div class="card-header">SN&密钥记录</div>
                     <div class="card-body">
                         <table class="table">
