@@ -20,20 +20,20 @@ class SnController extends Controller
         if ($c === 0) {
             return response()->json([
                 'code' => -1,
-                'message' => 'mac不存在',
+                'message' => 'mac不存在！',
             ]);
         }
         if ($c > 1) {
             return response()->json([
                 'code' => -1,
-                'message' => 'mac重复',
+                'message' => 'mac重复！',
             ]);
         }
         $mac = Mac::where('mac', $pcba->mac)->first();
         if (is_null($mac)) {
             return response()->json([
                 'code' => -1,
-                'message' => 'mac是多余的',
+                'message' => 'mac是多余的！',
             ]);
         }
 
@@ -42,13 +42,13 @@ class SnController extends Controller
         if ($s === 0) {
             return response()->json([
                 'code' => -1,
-                'message' => 'sn不存在',
+                'message' => 'sn不存在！',
             ]);
         }
         if ($s > 1) {
             return response()->json([
                 'code' => -1,
-                'message' => 'sn重复',
+                'message' => 'sn重复！',
             ]);
         }
 
@@ -57,13 +57,13 @@ class SnController extends Controller
         if ($s2 === 0) {
             return response()->json([
                 'code' => -1,
-                'message' => 'key不存在',
+                'message' => 'key不存在！',
             ]);
         }
         if ($s2 > 1) {
             return response()->json([
                 'code' => -1,
-                'message' => 'key重复',
+                'message' => 'key重复！',
             ]);
         }
 
