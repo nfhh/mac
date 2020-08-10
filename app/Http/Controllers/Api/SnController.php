@@ -14,26 +14,28 @@ class SnController extends Controller
 {
     public function getSn(Request $request)
     {
-        $pcba = Pcba::where('mac', $request->mac)->get(); // 找到多个说明mac有重复 但找到一个不一定正确 有可能是多出的
+        $r_mac = $request->mac;
+        $pcba = Pcba::where('mac', $r_mac)->get(); // 找到多个说明mac有重复 但找到一个不一定正确 有可能是多出的
 
         $c = $pcba->count();
         if ($c === 0) {
             return response()->json([
                 'code' => -1,
-                'message' => 'mac不存在！',
+                'message' => 'mac:' . $r_mac . '不存在！',
             ]);
         }
         if ($c > 1) {
             return response()->json([
                 'code' => -1,
-                'message' => 'mac重复！',
+                'message' => 'mac:' . $r_mac . '重复！',
             ]);
         }
+
         $mac = Mac::where('mac', $pcba->mac)->first();
         if (is_null($mac)) {
             return response()->json([
                 'code' => -1,
-                'message' => 'mac是多余的！',
+                'message' => 'mac:' . $mac . '是多余的！',
             ]);
         }
 
@@ -42,28 +44,28 @@ class SnController extends Controller
         if ($s === 0) {
             return response()->json([
                 'code' => -1,
-                'message' => 'sn不存在！',
+                'message' => 'sn:' . $sn . '不存在！',
             ]);
         }
         if ($s > 1) {
             return response()->json([
                 'code' => -1,
-                'message' => 'sn重复！',
+                'message' => 'sn:' . $sn . '重复！',
             ]);
         }
 
-        $sn2 = Snkey::where('key', $pcba->key)->get();
-        $s2 = $sn2->count();
+        $key = Snkey::where('key', $pcba->key)->get();
+        $s2 = $key->count();
         if ($s2 === 0) {
             return response()->json([
                 'code' => -1,
-                'message' => 'key不存在！',
+                'message' => 'key:' . $key . '不存在！',
             ]);
         }
         if ($s2 > 1) {
             return response()->json([
                 'code' => -1,
-                'message' => 'key重复！',
+                'message' => 'key:' . $key . '重复！',
             ]);
         }
 
