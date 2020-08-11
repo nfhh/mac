@@ -31,7 +31,7 @@ class SnController extends Controller
             ]);
         }
 
-        $mac = Mac::where('mac', $pcba->mac)->first();
+        $mac = Mac::where('mac', $r_mac)->first();
         if (is_null($mac)) {
             return response()->json([
                 'code' => -1,
@@ -39,7 +39,7 @@ class SnController extends Controller
             ]);
         }
 
-        $sn = Snkey::where('sn', $pcba->sn)->get();
+        $sn = Snkey::where('sn', $pcba->first()->sn)->get();
         $s = $sn->count();
         if ($s === 0) {
             return response()->json([
@@ -54,7 +54,7 @@ class SnController extends Controller
             ]);
         }
 
-        $key = Snkey::where('key', $pcba->key)->get();
+        $key = Snkey::where('key', $pcba->first()->key)->get();
         $s2 = $key->count();
         if ($s2 === 0) {
             return response()->json([
@@ -72,7 +72,7 @@ class SnController extends Controller
         return response()->json([
             'code' => 0,
             'message' => '',
-            'data' => $pcba,
+            'data' => $pcba->first(),
         ]);
     }
 }
