@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\result;
+use App\Result;
 
 class ResultController extends Controller
 {
