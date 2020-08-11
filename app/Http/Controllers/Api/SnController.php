@@ -14,7 +14,7 @@ class SnController extends Controller
 {
     public function getSn(Request $request)
     {
-        $r_mac = $request->mac;
+        $r_mac = strtoupper(str_replace(':', '', $request->mac));
         $pcba = Pcba::where('mac', $r_mac)->get(); // 找到多个说明mac有重复 但找到一个不一定正确 有可能是多出的
 
         $c = $pcba->count();

@@ -15,10 +15,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/test', function () {
-    $arr = [
 
-    ];
-    dd(collect($arr)->count());
 });
 
 Route::get('/', function () {
