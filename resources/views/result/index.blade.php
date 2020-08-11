@@ -10,6 +10,12 @@
                 <div class="card">
                     <div class="card-header">比对结果</div>
                     <div class="card-body">
+                        <div class="alert alert-info">
+                            <ul class="list-unstyled">
+                                <li><span class="bg-primary d-inline-block" style="width: 10px;height: 10px;"></span> 重复</li>
+                                <li><span class="bg-danger d-inline-block" style="width: 10px;height: 10px;"></span> 多余</li>
+                            </ul>
+                        </div>
                         <table class="table">
                             <thead>
                             <tr>

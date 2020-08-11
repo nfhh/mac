@@ -63,7 +63,7 @@ class UploadController extends Controller
     {
         $excel_data = readExcel($request->file('file'));
         $data = [];
-        // 重复 warning   不在 danger
+        // 重复 text-primary   不在 text-danger
         $b = 0;
         $result = [];
         foreach ($excel_data as $k => $arr) {
@@ -90,7 +90,6 @@ class UploadController extends Controller
             $data[$k]['updated_at'] = now();
         }
 
-        $n = ["sn" => "text-warning", "key" => "text-primary", "mac" => "text-info"];
         $k = count($data);
         $c = 0;
 
@@ -100,9 +99,7 @@ class UploadController extends Controller
                     foreach ($data[$j] as $ind1 => $val1) {
                         if ($ind == $ind1 && $val == $val1) {
                             $c++;
-                            if (strpos($val1, $n[$ind1]) === false) {
-                                $result[$k][$ind1] = '<span class="' . $n[$ind1] . '">' . $val1 . '</span>';
-                            }
+                            $result[$k][$ind1] = '<span class="text-primary">' . $val1 . '</span>';
                         }
                     }
                 }
@@ -113,18 +110,18 @@ class UploadController extends Controller
 
         foreach ($result as $id => &$arr) {
             $arr['id'] = $id;
-            $data['created_at'] = now();
-            $data['updated_at'] = now();
+            $arr['created_at'] = now();
+            $arr['updated_at'] = now();
         }
         Result::insert($result);
 
         $str = '导入PCBA结果表成功！';
         if ($b && $c) {
-            $str .= '<br/>多余：<strong class="text-danger">' . $b . '</strong>处，重复：<strong class="text-danger">' . $c . '</strong>处';
+            $str .= '<br/>多余：<strong class="text-danger">' . $b . '</strong>处，重复：<strong class="text-primary">' . $c . '</strong>处';
         } elseif ($b) {
             $str .= '<br/>多余：<strong class="text-danger">' . $b . '</strong>处';
         } elseif ($c) {
-            $str .= '<br/>重复：<strong class="text-danger">' . $c . '</strong>处';
+            $str .= '<br/>重复：<strong class="text-primary">' . $c . '</strong>处';
         }
         return back()->with('success', $str);
     }
