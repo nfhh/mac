@@ -37,4 +37,16 @@ Route::middleware('auth')->group(function () {
     Route::get('/upload/pcba', 'UploadController@pcba')->name('upload.pcba');
     Route::post('/upload/pcba', 'UploadController@handlePcba')->name('upload.pcba');
     Route::get('/result', 'ResultController@index')->name('result.index');
+    Route::delete('/mac/truncate', function () {
+        \App\Mac::truncate();
+        return back()->with('success', '清空MAC表成功！');
+    })->name('mac.truncate');
+    Route::delete('/snkey/truncate', function () {
+        \App\Snkey::truncate();
+        return back()->with('success', '清空SN&密钥表成功！');
+    })->name('snkey.truncate');
+    Route::delete('/pcba/truncate', function () {
+        \App\Pcba::truncate();
+        return back()->with('success', '清空PCBA表成功！');
+    })->name('pcba.truncate');
 });

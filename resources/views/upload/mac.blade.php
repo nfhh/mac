@@ -15,14 +15,27 @@
                             @csrf
                             <div class="form-group">
                                 <label for="file">上传</label>
-                                <input type="file" class="form-control-file" id="file" name="file" accept="application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet">
+                                <input type="file" class="form-control-file" id="file" name="file"
+                                       accept="application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet">
                             </div>
                             <button type="submit" class="btn btn-primary">确定</button>
                         </form>
                     </div>
                 </div>
-                <div class="card">
-                    <div class="card-header">Mac记录</div>
+                <div class="card mt-3">
+                    <div class="card-header d-flex justify-content-between align-items-center">Mac记录
+                        <a class="btn btn-danger" href="javascript:;"
+                           onclick="if(confirm(`确定清空数据吗？`)){
+                               event.preventDefault(); document.getElementById('truncate-form').submit();
+                           }">
+                            清空数据
+                        </a>
+                        <form id="truncate-form" action="{{ route('mac.truncate') }}" method="POST"
+                              style="display: none;">
+                            @csrf
+                            @method('delete')
+                        </form>
+                    </div>
                     <div class="card-body">
                         <table class="table">
                             <thead>

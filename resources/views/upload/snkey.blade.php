@@ -22,8 +22,20 @@
                         </form>
                     </div>
                 </div>
-                <div class="card">
-                    <div class="card-header">SN&密钥记录</div>
+                <div class="card mt-3">
+                    <div class="card-header d-flex justify-content-between align-items-center">SN&密钥记录
+                        <a class="btn btn-danger" href="javascript:;"
+                           onclick="if(confirm(`确定清空数据吗？`)){
+                               event.preventDefault(); document.getElementById('truncate-form').submit();
+                           }">
+                            清空数据
+                        </a>
+                        <form id="truncate-form" action="{{ route('snkey.truncate') }}" method="POST"
+                              style="display: none;">
+                            @csrf
+                            @method('delete')
+                        </form>
+                    </div>
                     <div class="card-body">
                         <table class="table">
                             <thead>
