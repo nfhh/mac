@@ -8,8 +8,21 @@
             </div>
             <div class="col-md-9">
                 <div class="card">
-                    <div class="card-header">比对结果</div>
+                    <div class="card-header d-flex justify-content-between align-items-center">比对结果
+                        <a class="btn btn-danger" href="javascript:;"
+                           onclick="if(confirm(`确定清空数据吗？`)){
+                               event.preventDefault(); document.getElementById('truncate-form').submit();
+                           }">
+                            清空数据
+                        </a>
+                        <form id="truncate-form" action="{{ route('result.truncate') }}" method="POST"
+                              style="display: none;">
+                            @csrf
+                            @method('delete')
+                        </form>
+                    </div>
                     <div class="card-body">
+                        @include('common._message')
                         <div class="alert alert-info">
                             <ul class="list-unstyled">
                                 <li><span class="bg-primary d-inline-block" style="width: 10px;height: 10px;"></span> 重复</li>

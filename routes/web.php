@@ -37,6 +37,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/upload/pcba', 'UploadController@pcba')->name('upload.pcba');
     Route::post('/upload/pcba', 'UploadController@handlePcba')->name('upload.pcba');
     Route::get('/result', 'ResultController@index')->name('result.index');
+    Route::delete('/truncate', 'ResultController@truncate')->name('result.truncate');
     Route::delete('/mac/truncate', function () {
         \App\Mac::truncate();
         return back()->with('success', '清空MAC表成功！');
