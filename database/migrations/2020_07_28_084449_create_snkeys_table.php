@@ -15,8 +15,8 @@ class CreateSnkeysTable extends Migration
     {
         Schema::create('snkeys', function (Blueprint $table) {
             $table->id();
-            $table->string('sn')->default('');
-            $table->string('key')->default('');
+            $table->string('sn')->unique();
+            $table->string('key')->unique();
             $table->timestamps();
         });
     }

@@ -1,6 +1,5 @@
 <?php
 
-use App\Pcba;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -38,6 +37,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/upload/pcba', 'UploadController@handlePcba')->name('upload.pcba');
     Route::get('/result', 'ResultController@index')->name('result.index');
     Route::delete('/truncate', 'ResultController@truncate')->name('result.truncate');
+    Route::get('/sn', 'SnController@index')->name('sn.index');
     Route::delete('/mac/truncate', function () {
         \App\Mac::truncate();
         return back()->with('success', '清空MAC表成功！');

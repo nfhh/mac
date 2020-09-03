@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateMacsTable extends Migration
+class CreateSnsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,9 @@ class CreateMacsTable extends Migration
      */
     public function up()
     {
-        Schema::create('macs', function (Blueprint $table) {
+        Schema::create('sns', function (Blueprint $table) {
             $table->id();
-            $table->string('mac')->unique();
+            $table->string('sn')->unique();
             $table->timestamps();
         });
     }
@@ -27,6 +27,6 @@ class CreateMacsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('macs');
+        Schema::dropIfExists('sns');
     }
 }

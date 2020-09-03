@@ -5,4 +5,5 @@
     <a href="{{ route('upload.snkey') }}" class="list-group-item list-group-item-action @if(Route::currentRouteName() === 'upload.snkey') active @endif">上传SN&密钥表</a>
     <a href="{{ route('upload.pcba') }}" class="list-group-item list-group-item-action @if(Route::currentRouteName() === 'upload.pcba') active @endif">上传PCBA表</a>
     <a href="{{ route('result.index') }}" class="list-group-item list-group-item-action @if(Route::currentRouteName() === 'result.index') active @endif">比对结果</a>
+    <a href="{{ route('sn.index') }}" class="list-group-item list-group-item-action @if(Route::currentRouteName() === 'sn.index') active @endif">SN校验</a>
 </div>

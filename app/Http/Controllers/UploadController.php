@@ -12,7 +12,7 @@ class UploadController extends Controller
 {
     public function mac()
     {
-        $macs = Mac::paginate(20);
+        $macs = Mac::filter()->paginate(20);
         return view('upload.mac', compact('macs'));
     }
 
@@ -21,8 +21,12 @@ class UploadController extends Controller
         $excel_data = readExcel($request->file('file'));
         $data = [];
         foreach ($excel_data as $key => $arr) {
+            $mac = $arr['360提供的MAC地址'];
+            if (strlen($mac) !== 12) {
+                return back()->withErrors($key . '行的mac不合法！');
+            }
             $data[$key] = [
-                'mac' => $arr['360提供的MAC地址'],
+                'mac' => $mac,
                 'created_at' => now(),
                 'updated_at' => now(),
             ];
@@ -33,7 +37,7 @@ class UploadController extends Controller
 
     public function snkey()
     {
-        $snkeys = Snkey::paginate(20);
+        $snkeys = Snkey::filter()->paginate(20);
         return view('upload.snkey', compact('snkeys'));
     }
 
@@ -42,9 +46,17 @@ class UploadController extends Controller
         $excel_data = readExcel($request->file('file'));
         $data = [];
         foreach ($excel_data as $key => $arr) {
+            $sn = $arr['360_SN，要求写在SP寄存器'];
+            $keyx = $arr['360_密钥,要求写在SS寄存器'];
+            if (strlen($sn) !== 18) {
+                return back()->withErrors($key . '行的sn不合法！');
+            }
+            if (strlen($keyx) !== 32) {
+                return back()->withErrors($key . '行的密钥不合法！');
+            }
             $data[$key] = [
-                'sn' => $arr['360_SN，要求写在SP寄存器'],
-                'key' => $arr['360_密钥,要求写在SS寄存器'],
+                'sn' => $sn,
+                'key' => $keyx,
                 'created_at' => now(),
                 'updated_at' => now(),
             ];
@@ -55,7 +67,7 @@ class UploadController extends Controller
 
     public function pcba()
     {
-        $pcbas = Pcba::paginate(20);
+        $pcbas = Pcba::filter()->paginate(20);
         return view('upload.pcba', compact('pcbas'));
     }
 
@@ -82,7 +94,7 @@ class UploadController extends Controller
 
             $mac = $arr['PCBA写入的MAC地址'];
             $data[$k]['mac'] = $mac;
-            if (Mac::where('mac', $arr['PCBA写入的MAC地址'])->count() === 0) {
+            if (Mac::where('mac', $mac)->count() === 0) {
                 $b++;
                 $result[$k + 1]['mac'] = '<span class="text-danger">' . $mac . '</span>';
             }

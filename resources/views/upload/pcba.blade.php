@@ -22,6 +22,45 @@
                         </form>
                     </div>
                 </div>
+
+                <form class="pt-3" action="{{ route('upload.pcba') }}">
+                    @csrf
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group row">
+                                <label for="sn" class="col-md-2 col-form-label">sn</label>
+                                <div class="col-md-10">
+                                    <input type="text" class="form-control" id="sn" name="sn" value="{{ request('sn') }}">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group row">
+                                <label for="key" class="col-md-2 col-form-label">key</label>
+                                <div class="col-md-10">
+                                    <input type="text" class="form-control" id="key" name="key" value="{{ request('key') }}">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group row">
+                                <label for="mac" class="col-md-2 col-form-label">mac</label>
+                                <div class="col-md-10">
+                                    <input type="text" class="form-control" id="mac" name="mac" value="{{ request('mac') }}">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12 text-center">
+                            <div class="btn-group">
+                                <button class="btn btn-primary" type="submit">搜索</button>
+                                <a class="btn btn-secondary" href="{{ route('upload.pcba') }}">重置</a>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+
                 <div class="card mt-3">
                     <div class="card-header d-flex justify-content-between align-items-center">PCBA记录
                         <a class="btn btn-danger" href="javascript:;"

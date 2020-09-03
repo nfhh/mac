@@ -22,8 +22,29 @@
                         </form>
                     </div>
                 </div>
+
+                <form class="pt-3" action="{{ route('upload.mac') }}">
+                    @csrf
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group row">
+                                <label for="sn" class="col-md-2 col-form-label">mac</label>
+                                <div class="col-md-10">
+                                    <input type="text" class="form-control" id="mac" name="mac" value="{{ request('mac') }}">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="btn-group">
+                                <button class="btn btn-primary" type="submit">搜索</button>
+                                <a class="btn btn-secondary" href="{{ route('upload.snkey') }}">重置</a>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+
                 <div class="card mt-3">
-                    <div class="card-header d-flex justify-content-between align-items-center">Mac记录
+                    <div class="card-header d-flex justify-content-between align-items-center">SN&密钥记录
                         <a class="btn btn-danger" href="javascript:;"
                            onclick="if(confirm(`确定清空数据吗？`)){
                                event.preventDefault(); document.getElementById('truncate-form').submit();
@@ -40,7 +61,7 @@
                         <table class="table">
                             <thead>
                             <tr>
-                                <th scope="col">id</th>
+                                <th scope="col">序号</th>
                                 <th scope="col">MAC</th>
                                 <th scope="col">导入时间</th>
                             </tr>

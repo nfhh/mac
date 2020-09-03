@@ -8,18 +8,21 @@
             </div>
             <div class="col-md-9">
                 <div class="card">
-                    <div class="card-header d-flex justify-content-between align-items-center">比对结果
-                        <a class="btn btn-danger" href="javascript:;"
-                           onclick="if(confirm(`确定清空数据吗？`)){
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        比对结果
+                        <div class="col text-right">
+                            <a class="btn btn-danger" href="javascript:;"
+                               onclick="if(confirm(`确定清空数据吗？`)){
                                event.preventDefault(); document.getElementById('truncate-form').submit();
                            }">
-                            清空数据
-                        </a>
-                        <form id="truncate-form" action="{{ route('result.truncate') }}" method="POST"
-                              style="display: none;">
-                            @csrf
-                            @method('delete')
-                        </form>
+                                清空数据
+                            </a>
+                            <form id="truncate-form" action="{{ route('result.truncate') }}" method="POST"
+                                  style="display: none;">
+                                @csrf
+                                @method('delete')
+                            </form>
+                        </div>
                     </div>
                     <div class="card-body">
                         @include('common._message')
@@ -32,7 +35,7 @@
                         <table class="table">
                             <thead>
                             <tr>
-                                <th scope="col">id</th>
+                                <th scope="col">行号</th>
                                 <th scope="col">SN</th>
                                 <th scope="col">密钥</th>
                                 <th scope="col">MAC</th>
