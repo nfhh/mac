@@ -83,10 +83,10 @@
     <script>
         ws = new WebSocket("ws://127.0.0.1:8000");
         ws.onmessage = function (e) {
-            console.log(e.data); // ST NT 000050.2 g
-            const [a, b] = e.data.match(/-?[1-9]\d*/g);
-            console.log(`${a}.${b}`);
-            window.livewire.emit('getWeight', `${a}.${b}`);
+            console.log(e.data);
+            let arr = e.data.match(/-?[1-9]\d*/g);
+            console.log(`${arr[1]}.${arr[2]}`);
+            window.livewire.emit('getWeight', `${arr[1]}.${arr[2]}`);
         };
     </script>
 @endpush
