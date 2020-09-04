@@ -38,6 +38,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/result', 'ResultController@index')->name('result.index');
     Route::delete('/truncate', 'ResultController@truncate')->name('result.truncate');
     Route::get('/sn', 'SnController@index')->name('sn.index');
+    Route::get('/sns', 'SnsController@index')->name('sns.index');
+    Route::get('/weight', 'WeightController@index')->name('weight.index');
+    Route::post('/store', 'WeightController@store')->name('weight.store');
     Route::delete('/mac/truncate', function () {
         \App\Mac::truncate();
         return back()->with('success', '清空MAC表成功！');
