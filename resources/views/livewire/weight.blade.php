@@ -7,7 +7,8 @@
             </div>
             <div class="form-group col-md-6">
                 <label for="sn">机身SN</label>
-                <input type="text" class="form-control @error('sn') is-invalid @enderror" id="sn" x-ref="sn" wire:model="sn">
+                <input type="text" class="form-control @error('sn') is-invalid @enderror" id="sn" x-ref="sn"
+                       wire:model="sn">
                 @error('sn')
                 <div class="invalid-feedback">
                     {{ $message }}
@@ -80,8 +81,10 @@
 </div>
 @push('scripts')
     <script>
-        setTimeout(() => {
-            window.livewire.emit('getWeight', '19.9');
-        }, 300);
+        ws = new WebSocket("ws://127.0.0.1:8000");
+        ws.onmessage = function (e) {
+            const [a, b] = e.data.match(/-?[1-9]\d*/g);
+            window.livewire.emit('getWeight', `${a}.${b}`);
+        };
     </script>
 @endpush
