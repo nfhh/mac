@@ -27,7 +27,13 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 Route::middleware('auth')->group(function () {
     Route::get('/home', 'HomeController@index')->name('home');
+    Route::get('/sn', 'SnController@index')->name('sn.index');
+    Route::get('/sns', 'SnsController@index')->name('sns.index');
+    Route::get('/weight', 'WeightController@index')->name('weight.index');
+    Route::post('/store', 'WeightController@store')->name('weight.store');
+});
 
+Route::middleware(['auth', 'admin.can'])->group(function () {
     Route::get('/user/index', 'UserController@index')->name('user.index');
     Route::get('/user/edit', 'UserController@edit')->name('user.edit');
     Route::post('/user/update', 'UserController@update')->name('user.update');
@@ -42,12 +48,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/upload/pcba', 'UploadController@pcba')->name('upload.pcba');
     Route::post('/upload/pcba', 'UploadController@handlePcba')->name('upload.pcba');
     Route::get('/result', 'ResultController@index')->name('result.index');
-
     Route::delete('/truncate', 'ResultController@truncate')->name('result.truncate');
-    Route::get('/sn', 'SnController@index')->name('sn.index');
-    Route::get('/sns', 'SnsController@index')->name('sns.index');
-    Route::get('/weight', 'WeightController@index')->name('weight.index');
-    Route::post('/store', 'WeightController@store')->name('weight.store');
     Route::delete('/mac/truncate', function () {
         \App\Mac::truncate();
         return back()->with('success', '清空MAC表成功！');
