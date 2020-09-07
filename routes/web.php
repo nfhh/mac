@@ -27,8 +27,14 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 Route::middleware('auth')->group(function () {
     Route::get('/home', 'HomeController@index')->name('home');
+
+    Route::get('/user/index', 'UserController@index')->name('user.index');
     Route::get('/user/edit', 'UserController@edit')->name('user.edit');
     Route::post('/user/update', 'UserController@update')->name('user.update');
+    Route::get('/user/create', 'UserController@create')->name('user.create');
+    Route::post('/user/store', 'UserController@store')->name('user.store');
+    Route::delete('/user/{user}', 'UserController@destroy')->name('user.destroy');
+
     Route::get('/upload/mac', 'UploadController@mac')->name('upload.mac');
     Route::post('/upload/mac', 'UploadController@handleMac')->name('upload.mac');
     Route::get('/upload/snkey', 'UploadController@snkey')->name('upload.snkey');
@@ -36,6 +42,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/upload/pcba', 'UploadController@pcba')->name('upload.pcba');
     Route::post('/upload/pcba', 'UploadController@handlePcba')->name('upload.pcba');
     Route::get('/result', 'ResultController@index')->name('result.index');
+
     Route::delete('/truncate', 'ResultController@truncate')->name('result.truncate');
     Route::get('/sn', 'SnController@index')->name('sn.index');
     Route::get('/sns', 'SnsController@index')->name('sns.index');

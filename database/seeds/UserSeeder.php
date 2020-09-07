@@ -14,8 +14,8 @@ class UserSeeder extends Seeder
     {
         return User::create([
             'name' => 'terraadmin',
-            'email' => 'admin@qq.com',
             'password' => bcrypt('Terra0755'),
+            'role' => 'admin',
         ]);
     }
 }

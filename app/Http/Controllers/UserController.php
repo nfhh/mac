@@ -2,11 +2,19 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\UserRequest;
+use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
+    public function index()
+    {
+        $users = User::paginate(20);
+        return view('user.index', compact('users'));
+    }
+
     public function edit()
     {
         return view('user.edit');
@@ -23,6 +31,30 @@ class UserController extends Controller
             'password' => bcrypt($validated_data['password'])
         ]);
 
-        return back()->with('success', '修改密码成功');
+        return redirect(route('user.index'))->with('success', '修改密码成功');
+    }
+
+    public function create()
+    {
+        return view('user.create');
+    }
+
+    public function store(UserRequest $request)
+    {
+        User::create([
+            'name' => $request->name,
+            'password' => bcrypt($request->password),
+            'role' => 'user',
+        ]);
+        return redirect(route('user.index'))->with('success', '创建用户成功');
+    }
+
+    public function destroy($id)
+    {
+        User::destroy($id);
+        return response()->json([
+            'code' => 0,
+            'message' => '删除用户成功'
+        ]);
     }
 }
