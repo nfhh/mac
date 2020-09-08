@@ -50,7 +50,7 @@ class Sns extends Component
     public function render()
     {
         return view('livewire.sns', [
-            'snss' => SnsModel::where('jssn', 'like', '%' . $this->search . '%')->paginate(20)
+            'snss' => SnsModel::where('jssn', 'like', '%' . $this->search . '%')->orderByDesc('id')->paginate(20)
         ]);
     }
 }

@@ -73,7 +73,7 @@ class Weight extends Component
     public function render()
     {
         return view('livewire.weight', [
-            'weights' => WeightModel::where('sn', 'like', '%' . $this->search . '%')->paginate(20)
+            'weights' => WeightModel::where('sn', 'like', '%' . $this->search . '%')->orderByDesc('id')->paginate(20)
         ]);
     }
 }
