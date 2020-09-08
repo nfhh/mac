@@ -59,11 +59,13 @@ class Weight extends Component
         } else {
             $validated_data['result'] = 'NG';
         }
-        WeightModel::create($validated_data);
-        $this->machine = '';
+        $weight = WeightModel::create($validated_data);
+
+        $this->machine = $weight->machine;
+        $this->guess_val = $weight->guess_val;
+        $this->difference_val = $weight->difference_val;
+
         $this->sn = '';
-        $this->guess_val = '';
-        $this->difference_val = '';
         $this->actual_val = '';
         $this->dispatchBrowserEvent('refocus');
     }
