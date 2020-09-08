@@ -27,10 +27,12 @@ class Weight extends Component
     public function mount()
     {
         $this->fill(request()->only('search', 'page'));
-        $weight = WeightModel::orderByDesc('id')->first();
-        $this->machine = $weight->machine;
-        $this->guess_val = $weight->guess_val;
-        $this->difference_val = $weight->difference_val;
+
+        if ($weight = WeightModel::orderByDesc('id')->first()) {
+            $this->machine = $weight->machine;
+            $this->guess_val = $weight->guess_val;
+            $this->difference_val = $weight->difference_val;
+        }
     }
 
     public function getWeight($val)
