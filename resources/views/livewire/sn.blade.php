@@ -27,18 +27,16 @@
         </div>
     </div>
 
-    <form class="pt-3">
-        <div class="row">
-            <div class="col-md-6">
-                <div class="form-group row">
-                    <label for="search" class="col-md-2 col-form-label">SN</label>
-                    <div class="col-md-10">
-                        <input type="search" class="form-control" id="search" placeholder="输入SN搜索" wire:model="search">
-                    </div>
+    <div class="row pt-3">
+        <div class="col-md-6">
+            <div class="form-group row">
+                <label for="search" class="col-md-2 col-form-label">SN</label>
+                <div class="col-md-10">
+                    <input type="search" class="form-control" id="search" placeholder="输入SN搜索" wire:model="search">
                 </div>
             </div>
         </div>
-    </form>
+    </div>
 
     <div class="card">
         <div class="card-header">SN校验记录</div>
