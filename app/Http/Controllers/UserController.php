@@ -20,6 +20,20 @@ class UserController extends Controller
         return view('user.edit');
     }
 
+    public function useredit(User $user)
+    {
+        return view('user.useredit', compact('user'));
+    }
+
+    public function userupdate(Request $request)
+    {
+        $user = User::find($request->id);
+        $user->password = bcrypt($request->password);
+        $user->save();
+
+        return redirect(route('user.index'))->with('success', '修改密码成功');
+    }
+
     public function update(Request $request)
     {
         $validated_data = $request->validate([

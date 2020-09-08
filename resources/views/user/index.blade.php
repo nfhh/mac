@@ -29,12 +29,17 @@
                                     <th scope="row">{{ $user->name }}</th>
                                     <td>{{ $user->created_at }}</td>
                                     <td>
-                                        @if($user->id!=1)
-                                            <a class="btn btn-danger" href="javascript:;"
-                                               onclick="del({{ $user->id }})">
-                                                删除
-                                            </a>
-                                        @endif
+                                        <div class="btn-group">
+                                            @if($user->id!=1)
+                                                <a class="btn btn-primary" href="{{ route('useredit',$user->id) }}">
+                                                    编辑
+                                                </a>
+                                                <a class="btn btn-danger" href="javascript:;"
+                                                   onclick="del({{ $user->id }})">
+                                                    删除
+                                                </a>
+                                            @endif
+                                        </div>
                                     </td>
                                 </tr>
                             @endforeach

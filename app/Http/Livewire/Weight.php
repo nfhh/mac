@@ -16,6 +16,19 @@ class Weight extends Component
     public $difference_val;
     public $actual_val;
 
+    public $search = '';
+    public $page = 1;
+
+    protected $updatesQueryString = [
+        'search' => ['except' => ''],
+        'page' => ['except' => 1],
+    ];
+
+    public function mount()
+    {
+        $this->fill(request()->only('search', 'page'));
+    }
+
     public function getWeight($val)
     {
         $this->actual_val = $val;
@@ -48,7 +61,7 @@ class Weight extends Component
     public function render()
     {
         return view('livewire.weight', [
-            'weights' => WeightModel::paginate(20)
+            'weights' => WeightModel::where('sn', 'like', '%' . $this->search . '%')->paginate(20)
         ]);
     }
 }

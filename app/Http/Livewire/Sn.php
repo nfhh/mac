@@ -14,6 +14,19 @@ class Sn extends Component
 
     public $sn;
 
+    public $search = '';
+    public $page = 1;
+
+    protected $updatesQueryString = [
+        'search' => ['except' => ''],
+        'page' => ['except' => 1],
+    ];
+
+    public function mount()
+    {
+        $this->fill(request()->only('search', 'page'));
+    }
+
     public function updatedSn($val)
     {
         $row = Snkey::where('sn', $val)->first();
@@ -34,13 +47,15 @@ class Sn extends Component
             'sn' => $val
         ]);
 
+        $this->sn = '';
+
         $this->emitSelf('snRefresh');
     }
 
     public function render()
     {
         return view('livewire.sn', [
-            'sns' => SnModel::paginate(20)
+            'sns' => SnModel::where('sn', 'like', '%' . $this->search . '%')->paginate(20)
         ]);
     }
 }

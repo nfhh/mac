@@ -35,6 +35,8 @@ Route::middleware('auth')->group(function () {
 
 Route::middleware(['auth', 'admin.can'])->group(function () {
     Route::get('/user/index', 'UserController@index')->name('user.index');
+    Route::get('/useredit/{user}', 'UserController@useredit')->name('useredit');
+    Route::post('/userupdate', 'UserController@userupdate')->name('userupdate');
     Route::get('/user/edit', 'UserController@edit')->name('user.edit');
     Route::post('/user/update', 'UserController@update')->name('user.update');
     Route::get('/user/create', 'UserController@create')->name('user.create');
@@ -49,6 +51,27 @@ Route::middleware(['auth', 'admin.can'])->group(function () {
     Route::post('/upload/pcba', 'UploadController@handlePcba')->name('upload.pcba');
     Route::get('/result', 'ResultController@index')->name('result.index');
     Route::delete('/truncate', 'ResultController@truncate')->name('result.truncate');
+    Route::delete('/sns/truncate', function () {
+        if(\Illuminate\Support\Facades\Gate::allows('access-admin')){
+            \App\Sns::truncate();
+            return back()->with('success', '清空数据成功！');
+        }
+        abort(403);
+    })->name('sns.truncate');
+    Route::delete('/weight/truncate', function () {
+        if(\Illuminate\Support\Facades\Gate::allows('access-admin')){
+            \App\Weight::truncate();
+            return back()->with('success', '清空数据成功！');
+        }
+        abort(403);
+    })->name('weight.truncate');
+    Route::delete('/sn/truncate', function () {
+        if(\Illuminate\Support\Facades\Gate::allows('access-admin')){
+            \App\Sn::truncate();
+            return back()->with('success', '清空数据成功！');
+        }
+        abort(403);
+    })->name('sn.truncate');
     Route::delete('/mac/truncate', function () {
         \App\Mac::truncate();
         return back()->with('success', '清空MAC表成功！');

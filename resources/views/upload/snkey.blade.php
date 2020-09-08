@@ -38,7 +38,7 @@
                             <div class="form-group row">
                                 <label for="key" class="col-md-2 col-form-label">key</label>
                                 <div class="col-md-10">
-                                    <input type="text" class="form-control" id="key" name="key" value="{{ request('key') }}">
+                                    <input type="search" class="form-control" id="key" name="key" value="{{ request('key') }}">
                                 </div>
                             </div>
                         </div>

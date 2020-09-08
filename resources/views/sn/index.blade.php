@@ -7,12 +7,7 @@
                 @include('common._left')
             </div>
             <div class="col-md-9">
-                <div class="card">
-                    <div class="card-header">SN校验</div>
-                    <div class="card-body">
-                        <livewire:sn/>
-                    </div>
-                </div>
+                <livewire:sn/>
             </div>
         </div>
     </div>

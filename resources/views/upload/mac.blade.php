@@ -28,9 +28,9 @@
                     <div class="row">
                         <div class="col-md-4">
                             <div class="form-group row">
-                                <label for="sn" class="col-md-2 col-form-label">mac</label>
+                                <label for="mac" class="col-md-2 col-form-label">mac</label>
                                 <div class="col-md-10">
-                                    <input type="text" class="form-control" id="mac" name="mac" value="{{ request('mac') }}">
+                                    <input type="search" class="form-control" id="mac" name="mac" value="{{ request('mac') }}">
                                 </div>
                             </div>
                         </div>

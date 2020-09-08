@@ -1,22 +1,10 @@
 <div>
     <form x-data x-init="$refs.sn.focus()" x-on:refocus.window="$refs.sn.focus()" wire:submit.prevent="store">
         <div class="form-row">
-            <div class="form-group col-md-6">
+            <div class="form-group col-md-4">
                 <label for="machine">机种</label>
                 <input type="text" class="form-control" id="machine" name="machine" wire:model="machine">
             </div>
-            <div class="form-group col-md-6">
-                <label for="sn">机身SN</label>
-                <input type="text" class="form-control @error('sn') is-invalid @enderror" id="sn" x-ref="sn"
-                       wire:model="sn">
-                @error('sn')
-                <div class="invalid-feedback">
-                    {{ $message }}
-                </div>
-                @enderror
-            </div>
-        </div>
-        <div class="form-row">
             <div class="form-group col-md-4">
                 <label for="guess_val">预定值</label>
                 <div class="input-group">
@@ -35,7 +23,19 @@
                     </div>
                 </div>
             </div>
-            <div class="form-group col-md-4">
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label for="sn">机身SN</label>
+                <input type="text" class="form-control @error('sn') is-invalid @enderror" id="sn" x-ref="sn"
+                       wire:model="sn">
+                @error('sn')
+                <div class="invalid-feedback">
+                    {{ $message }}
+                </div>
+                @enderror
+            </div>
+            <div class="form-group col-md-6">
                 <label for="actual_val">实际值</label>
                 <div class="input-group">
                     <input type="text" class="form-control" id="actual_val" readonly wire:model="actual_val">
@@ -47,6 +47,20 @@
         </div>
         <button type="submit" class="btn btn-primary">确定</button>
     </form>
+
+    <form class="pt-3">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group row">
+                    <label for="search" class="col-md-2 col-form-label">SN</label>
+                    <div class="col-md-10">
+                        <input type="search" class="form-control" id="search" placeholder="输入SN搜索" wire:model="search">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+
     <div class="table-responsive pt-3">
         <table class="table">
             <thead>
