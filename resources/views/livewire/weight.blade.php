@@ -96,9 +96,7 @@
         ws = new WebSocket("ws://127.0.0.1:8000");
         ws.onmessage = function (e) {
             console.log(e.data);
-            let arr = e.data.match(/-?[1-9]\d*/g);
-            console.log(`${arr[1]}.${arr[2]}`);
-            window.livewire.emit('getWeight', `${arr[1]}.${arr[2]}`);
+            window.livewire.emit('getWeight', parseInt(e.data.match(/(?<=\d+ST NT )(.*)(?=\..*)/)[1]));
         };
     </script>
 @endpush
