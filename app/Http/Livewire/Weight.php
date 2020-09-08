@@ -4,12 +4,16 @@ namespace App\Http\Livewire;
 
 use Livewire\Component;
 use App\Weight as WeightModel;
+use Livewire\WithPagination;
 
 class Weight extends Component
 {
+    use WithPagination;
+
     protected $listeners = [
         'getWeight'
     ];
+
     public $machine;
     public $sn;
     public $guess_val;

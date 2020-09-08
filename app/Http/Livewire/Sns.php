@@ -4,9 +4,12 @@ namespace App\Http\Livewire;
 
 use Livewire\Component;
 use App\Sns as SnsModel;
+use Livewire\WithPagination;
 
 class Sns extends Component
 {
+    use WithPagination;
+
     protected $listeners = [
         'save' => 'store',
     ];
