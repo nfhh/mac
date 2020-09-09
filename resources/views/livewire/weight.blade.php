@@ -96,7 +96,7 @@
         ws = new WebSocket("ws://127.0.0.1:8000");
         ws.onmessage = function (e) {
             console.log(e.data);
-            window.livewire.emit('getWeight', parseInt(e.data.match(/(?<=\d+ST NT )(.*)(?=\..*)/)[1]));
+            window.livewire.emit('getWeight', parseInt(e.data.split(' ')[2]));
         };
     </script>
 @endpush
