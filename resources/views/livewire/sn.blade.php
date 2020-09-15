@@ -20,8 +20,13 @@
             <div class="form-group row" x-data x-init="$refs.sn.focus()">
                 <label for="sn" class="col-md-2 col-form-label">SN</label>
                 <div class="col-md-10">
-                    <input type="text" class="form-control" id="sn" wire:model="sn"
+                    <input type="search" class="form-control @error('sn') is-invalid @enderror" id="sn" wire:model="sn"
                            x-ref="sn">
+                    @error('sn')
+                    <div class="invalid-feedback" role="alert">
+                        <h2>{{ $message }}</h2>
+                    </div>
+                    @enderror
                 </div>
             </div>
         </div>
@@ -65,16 +70,3 @@
         </div>
     </div>
 </div>
-@push('scripts')
-    <script>
-        window.livewire.on('snx1', () => {
-            alert('SN校验失败！');
-            location.reload();
-        })
-
-        window.livewire.on('snx2', () => {
-            alert('SN已入库！');
-            location.reload();
-        })
-    </script>
-@endpush

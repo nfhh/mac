@@ -16,6 +16,8 @@ class Sn extends Component
     public $search = '';
     public $page = 1;
 
+    public $msg = '';
+
     protected $updatesQueryString = [
         'search' => ['except' => ''],
         'page' => ['except' => 1],
@@ -30,14 +32,14 @@ class Sn extends Component
     {
         $row = Snkey::where('sn', $val)->first();
         if (is_null($row)) {
-            $this->emit('snx1');
+            $this->addError('sn', 'SN不存在！');
             return false;
         }
 
         $sn_row = SnModel::where('sn', $val)->first();
 
         if ($sn_row) {
-            $this->emit('snx2');
+            $this->addError('sn', 'SN已存在！');
             return false;
         }
 

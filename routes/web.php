@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,7 +15,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/test', function () {
-
+    dd(\App\Product::first());
 });
 
 Route::get('/', function () {
@@ -28,6 +29,7 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::middleware('auth')->group(function () {
     Route::get('/home', 'HomeController@index')->name('home');
     Route::get('/sn', 'SnController@index')->name('sn.index');
+    Route::resource('product', 'ProductController');
     Route::get('/sns', 'SnsController@index')->name('sns.index');
     Route::get('/weight', 'WeightController@index')->name('weight.index');
     Route::post('/store', 'WeightController@store')->name('weight.store');

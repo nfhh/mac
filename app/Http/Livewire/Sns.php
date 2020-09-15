@@ -14,6 +14,9 @@ class Sns extends Component
         'save' => 'store',
     ];
 
+    public $open = false;
+    public $msg = '';
+
     public $search = '';
     public $page = 1;
 
@@ -30,12 +33,14 @@ class Sns extends Component
     public function store($one, $two)
     {
         if (SnsModel::where('jssn', $one)->first()) {
-            $this->emit('jssnx');
+            $this->open = true;
+            $this->msg = '机身SN重复！';
             return false;
         }
 
         if (SnsModel::where('chsn', $two)->first()) {
-            $this->emit('chsnx');
+            $this->open = true;
+            $this->msg = '彩盒SN重复！';
             return false;
         }
 
@@ -43,8 +48,6 @@ class Sns extends Component
             'jssn' => $one,
             'chsn' => $two,
         ]);
-
-        $this->emit('resetFormOk');
     }
 
     public function render()

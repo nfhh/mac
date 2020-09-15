@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire;
 
+use App\Product;
 use Livewire\Component;
 use App\Weight as WeightModel;
 use Livewire\WithPagination;
@@ -14,66 +15,90 @@ class Weight extends Component
         'getWeight'
     ];
 
-    public $machine;
-    public $sn;
-    public $guess_val;
-    public $difference_val;
-    public $actual_val;
+    public $products = [];
 
-    public $search = '';
-    public $page = 1;
-
-    protected $updatesQueryString = [
-        'search' => ['except' => ''],
-        'page' => ['except' => 1],
+    public $form = [
+        'machine' => '',
+        'sn' => '',
+        'guess_val' => '',
+        'difference_val' => '',
+        'actual_val' => '',
     ];
+
+    public $search = [
+        'sn' => '',
+        'created_at' => '', // "2020-09-15"
+    ];
+
+    public $open = false;
 
     public function mount()
     {
-        $this->fill(request()->only('search', 'page'));
+        $this->products = Product::all();
+        $product = Product::first();
+        $this->form['machine'] = $product->title;
+        $this->form['guess_val'] = $product->guess_val;
+        $this->form['difference_val'] = $product->difference_val;
+    }
 
-        if ($weight = WeightModel::orderByDesc('id')->first()) {
-            $this->machine = $weight->machine;
-            $this->guess_val = $weight->guess_val;
-            $this->difference_val = $weight->difference_val;
+    public function updated($name, $value)
+    {
+        if ($name === 'form.machine') {
+            $product = Product::findOneByTitle($value);
+            $this->form['guess_val'] = $product->guess_val;
+            $this->form['difference_val'] = $product->difference_val;
         }
     }
+
 
     public function getWeight($val)
     {
-        $this->actual_val = $val;
+        $this->form['actual_val'] = $val;
     }
 
-    public function store()
+    public function handleStore()
     {
-        $validated_data = $this->validate([
-            'machine' => 'required',
-            'sn' => 'required|unique:weights,sn',
-            'guess_val' => 'required',
-            'difference_val' => 'required',
-            'actual_val' => 'required',
-        ]);
 
-        if (abs($validated_data['actual_val'] - $validated_data['guess_val']) < $validated_data['difference_val']) {
-            $validated_data['result'] = 'OK';
-        } else {
-            $validated_data['result'] = 'NG';
+        if (WeightModel::findOneBySn($this->form['sn'])) {
+            $this->open = true;
+            return false;
         }
-        $weight = WeightModel::create($validated_data);
 
-        $this->machine = $weight->machine;
-        $this->guess_val = $weight->guess_val;
-        $this->difference_val = $weight->difference_val;
+        $this->store();
 
-        $this->sn = '';
-        $this->actual_val = '';
+        $this->resetForm();
+
         $this->dispatchBrowserEvent('refocus');
+    }
+
+    public function handleUpdate()
+    {
+        WeightModel::findOneBySn($this->form['sn'])->delete();
+        $this->open = false;
+        $this->store();
+        $this->resetForm();
+    }
+
+    private function resetForm()
+    {
+        $this->form['sn'] = '';
+        $this->form['actual_val'] = '';
+    }
+
+    private function store()
+    {
+        if (abs($this->form['actual_val'] - $this->form['guess_val']) < $this->form['difference_val']) {
+            $this->form['result'] = 'OK';
+        } else {
+            $this->form['result'] = 'NG';
+        }
+        return WeightModel::create($this->form);
     }
 
     public function render()
     {
         return view('livewire.weight', [
-            'weights' => WeightModel::where('sn', 'like', '%' . $this->search . '%')->orderByDesc('id')->paginate(20)
+            'weights' => WeightModel::filter($this->search)->orderByDesc('created_at')->paginate(20)
         ]);
     }
 }
