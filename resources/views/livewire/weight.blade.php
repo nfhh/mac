@@ -45,7 +45,7 @@
             <div class="form-group col-md-12">
                 <label for="actual_val">实际值</label>
                 <div class="input-group">
-                    <input type="text" class="form-control" id="actual_val" wire:model="form.actual_val" required>
+                    <input type="text" class="form-control" id="actual_val" wire:model="form.actual_val" readonly required>
                     <div class="input-group-append">
                         <span class="input-group-text">克</span>
                     </div>
