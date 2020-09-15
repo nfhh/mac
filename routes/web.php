@@ -1,6 +1,5 @@
 <?php
 
-use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -15,7 +14,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/test', function () {
-    dd(\App\Product::first());
+
 });
 
 Route::get('/', function () {
@@ -33,6 +32,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/sns', 'SnsController@index')->name('sns.index');
     Route::get('/weight', 'WeightController@index')->name('weight.index');
     Route::post('/store', 'WeightController@store')->name('weight.store');
+    Route::get('/upload/pcba', 'UploadController@pcba')->name('upload.pcba');
+    Route::post('/upload/pcba', 'UploadController@handlePcba')->name('upload.pcba');
 });
 
 Route::middleware(['auth', 'admin.can'])->group(function () {
@@ -49,8 +50,6 @@ Route::middleware(['auth', 'admin.can'])->group(function () {
     Route::post('/upload/mac', 'UploadController@handleMac')->name('upload.mac');
     Route::get('/upload/snkey', 'UploadController@snkey')->name('upload.snkey');
     Route::post('/upload/snkey', 'UploadController@handleSnkey')->name('upload.snkey');
-    Route::get('/upload/pcba', 'UploadController@pcba')->name('upload.pcba');
-    Route::post('/upload/pcba', 'UploadController@handlePcba')->name('upload.pcba');
     Route::get('/result', 'ResultController@index')->name('result.index');
     Route::delete('/truncate', 'ResultController@truncate')->name('result.truncate');
     Route::delete('/sns/truncate', function () {
