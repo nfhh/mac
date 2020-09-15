@@ -36,9 +36,11 @@ class Weight extends Component
     {
         $this->products = Product::all();
         $product = Product::first();
-        $this->form['machine'] = $product->title;
-        $this->form['guess_val'] = $product->guess_val;
-        $this->form['difference_val'] = $product->difference_val;
+        if($product){
+            $this->form['machine'] = $product->title;
+            $this->form['guess_val'] = $product->guess_val;
+            $this->form['difference_val'] = $product->difference_val;
+        }
     }
 
     public function updated($name, $value)
