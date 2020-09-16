@@ -36,7 +36,7 @@ class Weight extends Component
     {
         $this->products = Product::all();
         $product = Product::first();
-        if($product){
+        if ($product) {
             $this->form['machine'] = $product->title;
             $this->form['guess_val'] = $product->guess_val;
             $this->form['difference_val'] = $product->difference_val;
@@ -60,6 +60,9 @@ class Weight extends Component
 
     public function handleStore()
     {
+        if ($this->form['actual_val'] === '') {
+            return false;
+        }
 
         if (WeightModel::findOneBySn($this->form['sn'])) {
             $this->open = true;

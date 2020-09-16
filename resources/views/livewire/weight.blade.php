@@ -33,7 +33,7 @@
             <div class="form-group col-md-12">
                 <label for="sn">机身SN</label>
                 <input type="text" class="form-control @error('sn') is-invalid @enderror" id="sn" x-ref="sn"
-                       wire:model="form.sn" required>
+                       wire:model.debounce.500ms="form.sn" required>
                 @error('sn')
                 <div class="invalid-feedback">
                     <h2>{{ $message }}</h2>
