@@ -12,7 +12,8 @@
             <div class="form-group col-md-4">
                 <label for="guess_val">预定值</label>
                 <div class="input-group">
-                    <input type="text" class="form-control" id="guess_val" wire:model="form.guess_val" readonly required>
+                    <input type="text" class="form-control" id="guess_val" wire:model="form.guess_val" readonly
+                           required>
                     <div class="input-group-append">
                         <span class="input-group-text">克</span>
                     </div>
@@ -45,7 +46,8 @@
             <div class="form-group col-md-12">
                 <label for="actual_val">实际值</label>
                 <div class="input-group">
-                    <input type="text" class="form-control" id="actual_val" wire:model="form.actual_val" readonly required>
+                    <input type="text" class="form-control" id="actual_val" wire:model="form.actual_val" readonly
+                           required>
                     <div class="input-group-append">
                         <span class="input-group-text">克</span>
                     </div>
@@ -101,7 +103,13 @@
                     <td>{{ $item->guess_val }} 克</td>
                     <td>{{ $item->difference_val }} 克</td>
                     <td>{{ $item->actual_val }} 克</td>
-                    <td>{{ $item->result }}</td>
+                    <td>
+                        @if($item->result === 'NG')
+                            <span class="text-danger">{{ $item->result }}</span>
+                        @else
+                            {{ $item->result }}
+                        @endif
+                    </td>
                     <td>{{ $item->created_at }}</td>
                 </tr>
             @endforeach

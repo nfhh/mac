@@ -34,6 +34,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/store', 'WeightController@store')->name('weight.store');
     Route::get('/upload/pcba', 'UploadController@pcba')->name('upload.pcba');
     Route::post('/upload/pcba', 'UploadController@handlePcba')->name('upload.pcba');
+    Route::get('/result', 'ResultController@index')->name('result.index');
 });
 
 Route::middleware(['auth', 'admin.can'])->group(function () {
@@ -50,7 +51,6 @@ Route::middleware(['auth', 'admin.can'])->group(function () {
     Route::post('/upload/mac', 'UploadController@handleMac')->name('upload.mac');
     Route::get('/upload/snkey', 'UploadController@snkey')->name('upload.snkey');
     Route::post('/upload/snkey', 'UploadController@handleSnkey')->name('upload.snkey');
-    Route::get('/result', 'ResultController@index')->name('result.index');
     Route::delete('/truncate', 'ResultController@truncate')->name('result.truncate');
     Route::delete('/sns/truncate', function () {
         if(\Illuminate\Support\Facades\Gate::allows('access-admin')){

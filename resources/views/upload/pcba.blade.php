@@ -63,6 +63,7 @@
 
                 <div class="card mt-3">
                     <div class="card-header d-flex justify-content-between align-items-center">PCBA记录
+                        @can('access-admin')
                         <a class="btn btn-danger" href="javascript:;"
                            onclick="if(confirm(`确定清空数据吗？`)){
                                event.preventDefault(); document.getElementById('truncate-form').submit();
@@ -74,6 +75,7 @@
                             @csrf
                             @method('delete')
                         </form>
+                        @endcan
                     </div>
                     <div class="card-body">
                         <table class="table">

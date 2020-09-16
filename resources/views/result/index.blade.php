@@ -10,6 +10,7 @@
                 <div class="card">
                     <div class="card-header d-flex justify-content-between align-items-center">
                         比对结果
+                        @can('access-admin')
                         <div class="col text-right">
                             <a class="btn btn-danger" href="javascript:;"
                                onclick="if(confirm(`确定清空数据吗？`)){
@@ -23,6 +24,7 @@
                                 @method('delete')
                             </form>
                         </div>
+                        @endcan
                     </div>
                     <div class="card-body">
                         @include('common._message')
