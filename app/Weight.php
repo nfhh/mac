@@ -15,4 +15,9 @@ class Weight extends Model
     {
         return self::where('sn', $sn)->first();
     }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

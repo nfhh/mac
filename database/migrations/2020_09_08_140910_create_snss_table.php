@@ -17,6 +17,7 @@ class CreateSnssTable extends Migration
             $table->id();
             $table->string('jssn')->unique();
             $table->string('chsn')->unique();
+            $table->unsignedBigInteger('user_id')->default(0);
             $table->timestamps();
         });
     }

@@ -16,6 +16,7 @@ class CreateSnsTable extends Migration
         Schema::create('sns', function (Blueprint $table) {
             $table->id();
             $table->string('sn')->unique();
+            $table->unsignedBigInteger('user_id')->default(0);
             $table->timestamps();
         });
     }

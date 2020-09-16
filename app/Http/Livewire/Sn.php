@@ -4,6 +4,7 @@ namespace App\Http\Livewire;
 
 use App\Snkey;
 use App\Sn as SnModel;
+use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -46,14 +47,15 @@ class Sn extends Component
         $this->sn = '';
 
         $sn_obj = SnModel::create([
-            'sn' => $val
+            'sn' => $val,
+            'user_id' => Auth::id(),
         ]);
     }
 
     public function render()
     {
         return view('livewire.sn', [
-            'sns' => SnModel::where('sn', 'like', '%' . $this->search . '%')->orderByDesc('id')->paginate(20)
+            'sns' => SnModel::with('user')->where('sn', 'like', '%' . $this->search . '%')->orderByDesc('id')->paginate(20)
         ]);
     }
 }

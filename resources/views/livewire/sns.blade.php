@@ -23,7 +23,9 @@
 
                               $watch('jssn', value => {
                                   if(value){
-                                    $refs.ch_sn.focus();
+                                      if($refs.ch_sn){
+                                        $refs.ch_sn.focus();
+                                      }
                                   }
                               });
 
@@ -36,7 +38,9 @@
                                     if(value && jssn){
                                         window.livewire.emit('save', jssn, chsn);
                                     }
-                                    $refs.js_sn.focus();
+                                    if($refs.js_sn){
+                                        $refs.js_sn.focus();
+                                    }
                                     error2 = false;
                                     disabled = true;
                                   }
@@ -110,6 +114,7 @@
                         <th scope="col">机身SN</th>
                         <th scope="col">彩盒SN</th>
                         <th scope="col">时间</th>
+                        <th scope="col">用户</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -119,6 +124,7 @@
                             <td>{{ $item->jssn }}</td>
                             <td>{{ $item->chsn }}</td>
                             <td>{{ $item->created_at }}</td>
+                            <td>{{ $item->user->name }}</td>
                         </tr>
                     @endforeach
                     </tbody>
@@ -149,4 +155,11 @@
         <div class="modal-backdrop fade show"></div>
     @endif
 </div>
+@push('scripts')
+    <script>
+        window.livewire.on('emitRefresh', () => {
+            location.reload();
+        })
+    </script>
+@endpush
 

@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire;
 
+use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 use App\Sns as SnsModel;
 use Livewire\WithPagination;
@@ -12,6 +13,7 @@ class Sns extends Component
 
     protected $listeners = [
         'save' => 'store',
+//        'emitRefresh' => '$refresh',
     ];
 
     public $open = false;
@@ -47,7 +49,10 @@ class Sns extends Component
         SnsModel::create([
             'jssn' => $one,
             'chsn' => $two,
+            'user_id' => Auth::id(),
         ]);
+
+        $this->emit('emitRefresh');
     }
 
     public function render()

@@ -53,6 +53,7 @@
                         <th scope="col">序号</th>
                         <th scope="col">SN</th>
                         <th scope="col">时间</th>
+                        <th scope="col">用户</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -61,6 +62,7 @@
                             <td>{{ $item->id }}</td>
                             <td>{{ $item->sn }}</td>
                             <td>{{ $item->created_at }}</td>
+                            <td>{{ $item->user->name }}</td>
                         </tr>
                     @endforeach
                     </tbody>

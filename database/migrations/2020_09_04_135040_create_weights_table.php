@@ -21,6 +21,7 @@ class CreateWeightsTable extends Migration
             $table->string('difference_val')->default('');
             $table->string('actual_val')->default('');
             $table->string('result')->default('OK');
+            $table->unsignedBigInteger('user_id')->default(0);
             $table->timestamps();
         });
     }

@@ -46,8 +46,8 @@
             <div class="form-group col-md-12">
                 <label for="actual_val">实际值</label>
                 <div class="input-group">
-                    <input type="text" class="form-control" id="actual_val" wire:model="form.actual_val" readonly
-                           required>
+                    <input type="text" class="form-control" id="actual_val" wire:model="form.actual_val"
+                           readonly required>
                     <div class="input-group-append">
                         <span class="input-group-text">克</span>
                     </div>
@@ -58,7 +58,7 @@
     </form>
 
     <div class="row pt-3">
-        <div class="col-md-5">
+        <div class="col-md-4">
             <div class="form-group row">
                 <label for="search_cn" class="col-md-3 col-form-label">SN</label>
                 <div class="col-md-9">
@@ -67,7 +67,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-5">
+        <div class="col-md-4">
             <div class="form-group row">
                 <label for="created_at" class="col-md-3 col-form-label">日期</label>
                 <div class="col-md-9">
@@ -75,7 +75,24 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-2">
+        @can('access-admin')
+            <div class="col-md-4">
+                <div class="form-group row">
+                    <label for="user_id" class="col-md-3 col-form-label">用户</label>
+                    <div class="col-md-9">
+                        <select class="form-control" id="user_id" wire:model="search.user_id">
+                            @foreach($users as $user)
+                                <option value="{{ $user->id }}">{{ $user->name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                </div>
+            </div>
+        @endcan
+    </div>
+
+    <div class="row">
+        <div class="col-md-3">
             <a href="/weight" class="btn btn-primary">重置</a>
         </div>
     </div>
@@ -92,6 +109,7 @@
                 <th scope="col">实际值</th>
                 <th scope="col">结果</th>
                 <th scope="col">时间</th>
+                <th scope="col">用户</th>
             </tr>
             </thead>
             <tbody>
@@ -111,13 +129,16 @@
                         @endif
                     </td>
                     <td>{{ $item->created_at }}</td>
+                    <td>{{ $item->user->name }}</td>
                 </tr>
             @endforeach
             </tbody>
         </table>
     </div>
     {{ $weights->links() }}
-
+    <div class="alert alert-info">
+        总记录数 <strong>{{ $count }}</strong>
+    </div>
     @if($open)
         <div class="modal fade show d-block" tabindex="-1">
             <div class="modal-dialog modal-dialog-centered">

@@ -3,6 +3,8 @@
 namespace App\Http\Livewire;
 
 use App\Product;
+use App\User;
+use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 use App\Weight as WeightModel;
 use Livewire\WithPagination;
@@ -25,15 +27,18 @@ class Weight extends Component
         'actual_val' => '',
     ];
 
+    public $users = [];
     public $search = [
         'sn' => '',
         'created_at' => '', // "2020-09-15"
+        'user_id' => '',
     ];
 
     public $open = false;
 
     public function mount()
     {
+        $this->users = User::all();
         $this->products = Product::all();
         $product = Product::first();
         if ($product) {
@@ -97,13 +102,17 @@ class Weight extends Component
         } else {
             $this->form['result'] = 'NG';
         }
+
+        $this->form['user_id'] = Auth::id();
+
         return WeightModel::create($this->form);
     }
 
     public function render()
     {
         return view('livewire.weight', [
-            'weights' => WeightModel::filter($this->search)->orderByDesc('created_at')->paginate(20)
+            'weights' => WeightModel::filter($this->search)->orderByDesc('created_at')->paginate(20),
+            'count' => WeightModel::filter($this->search)->count('id'),
         ]);
     }
 }
